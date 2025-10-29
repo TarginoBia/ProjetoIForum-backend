@@ -1,4 +1,4 @@
-package com.projetodac.backend.CrudUser.model;
+package com.projeto.IForum.model;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -16,7 +16,7 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor 
 @AllArgsConstructor
 @EqualsAndHashCode(callSuper = true) 
-public class Aluno extends User {
+public class Aluno extends Usuario {
     
     @Column(nullable = false, length = 120)
     private String matricula;
