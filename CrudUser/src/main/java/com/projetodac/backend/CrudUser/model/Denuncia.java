@@ -1,8 +1,8 @@
-package com.projetodac.backend.CrudUser.model;
+package com.projeto.IForum.model;
 
 import java.time.LocalDateTime;
 
-import com.projetodac.backend.CrudUser.enums.Status;
+import com.projeto.IForum.enums.Status;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -35,66 +35,6 @@ public class Denuncia {
 
     @ManyToOne
     @JoinColumn(name = "id_usuario", nullable = false) 
-    private User usuario; 
+    private Usuario usuario; 
 
-    public Denuncia() {
-        this.dataRegistro = LocalDateTime.now();
-    }
-    
-    public Denuncia(Long id, String titulo, String descricao, Status status, User usuario) {
-        this.id = id;
-        this.titulo = titulo;
-        this.descricao = descricao;
-        this.status = status;
-        this.usuario = usuario;
-        this.dataRegistro = LocalDateTime.now();
-    }
-
-    public Long getId() {
-        return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
-    }
-
-    public String getTitulo() {
-        return titulo;
-    }
-
-    public void setTitulo(String titulo) {
-        this.titulo = titulo;
-    }
-
-    public String getDescricao() {
-        return descricao;
-    }
-
-    public void setDescricao(String descricao) {
-        this.descricao = descricao;
-    }
-
-    public Status getStatus() {
-        return status;
-    }
-
-    public void setStatus(Status novoStatus) {
-        this.status = novoStatus;
-    }
-
-    public LocalDateTime getDataRegistro() {
-        return dataRegistro;
-    }
-
-    public void setDataRegistro(LocalDateTime dataRegistro) {
-        this.dataRegistro = dataRegistro;
-    }
-
-    public User getUsuario() {
-        return usuario;
-    }
-
-    public void setUsuario(User usuario) {
-        this.usuario = usuario;
-    }
 }
