@@ -1,13 +1,13 @@
-package com.projetodac.backend.CrudUser;
+package com.projeto.IForum;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 @SpringBootApplication
-public class CrudUserApplication {
+public class IForumApplication {
 
 	public static void main(String[] args) {
-		SpringApplication.run(CrudUserApplication.class, args);
+		SpringApplication.run(IForumApplication.class, args);
 	}
 
 }
