@@ -24,3 +24,8 @@ RF10 – Visualização e Triagem: O sistema deve exibir uma lista de todas as m
 RF11 – Registro de Ações: O sistema deve permitir que o Setor Responsável registre todas as ações tomadas durante o processo de apuração/análise, formando um histórico interno da manifestação
 RF12 – Alteração de Status: O sistema deve permitir a alteração do status da manifestação (Ex: "Em Análise" para "Concluído" ou "Arquivado").
 
+O desenvolvimento e a modelagem do sistema IFórum representam a concretização de uma solução robusta e essencial para o Instituto Federal da Paraíba (IFPB). O projeto cumpriu seu objetivo geral de estabelecer uma plataforma digital e segura para a gestão de manifestações (denúncias e sugestões), transformando o feedback da comunidade em um instrumento de controle e aprimoramento institucional.
+Os requisitos funcionais detalhados asseguram que o sistema entregará funcionalidades críticas, como o registro anônimo e sigiloso (RF03, RNF06), a geração de protocolo único para rastreabilidade (RF05), e o controle de fluxo e prazos para a Ouvidoria (RF13). A modelagem (Diagramas de Caso de Uso e Requisitos) valida a viabilidade técnica da solução, demonstrando que o IFórum está pronto para ser implementado, respeitando as exigências de segurança, usabilidade e desempenho (RNF04, RNF08).
+Em suma, o IFórum não é apenas um sistema de software; é um passo estratégico em direção a uma cultura de transparência e participação efetiva dentro do IFPB, contribuindo diretamente para a melhoria contínua da gestão e para o fortalecimento da confiança mútua entre a instituição e sua comunidade.
+
+
