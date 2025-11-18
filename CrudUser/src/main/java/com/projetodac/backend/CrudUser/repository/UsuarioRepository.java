@@ -1,5 +1,10 @@
 package com.projeto.IForum.repository;
 
-public class UsuarioRepository {
-    
+public interface UsuarioRepository extends JpaRepository<Usuario,Long>{
+
+    public void save(Usuario usuario);
+
+    public Usuario findUsuarioById(Long id);
+
 }
+    
