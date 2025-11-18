@@ -14,30 +14,37 @@ import org.springframework.web.bind.annotation.RequestBody;
 
 import jakarta.validation.Valid;
 
-public abstract class UsuarioController<D, I> {
+@RestController
+@RequestMapping("/usuarios")
+public class UsuarioController{
 
-    @GetMapping
-    public ResponseEntity<List<D>> findAll() {
-        return ResponseEntity.ok(Collections.emptyList());
+    private List<Usuario> usuarios = new ArrayList<>();
+
+    @GetMapping("/usuarios")
+    public List<Usuario> getAllUsuarios() {
+        return usuarios;
     }
 
-    @GetMapping("/{id}")
-    public ResponseEntity<D> findById(@PathVariable Long id) {
-        return ResponseEntity.notFound().build(); 
-    }
-    
-    @PostMapping
-    public ResponseEntity<D> create(@Valid @RequestBody D dto) {
-        return ResponseEntity.status(HttpStatus.CREATED).body(dto); 
+    @PostMapping("/usuarios")
+    public String addUsuario(@RequestBody Usuario usuario) {
+        usuarios.add(usuario);
+        return "Usuário inserido com sucesso";
     }
 
-    @PutMapping("/{id}")
-    public ResponseEntity<D> update(@PathVariable Long id, @Valid @RequestBody D dto) {
-        return ResponseEntity.ok(dto); 
+    @PutMapping("/usuarios/{id}")
+    public String updateUsuario(@PathVariable int id, @RequestBody Usuario updatedUsuario) {
+        for (Usuario usuario : usuarios) {
+            if (usuario.getId() == id) {
+                usuario.setName(updatedUsuario.getName());
+                return "Usuário atualizado com sucesso";
+            }
+        }
+        return "Usuário não encontrado!";
     }
 
-    @DeleteMapping("/{id}")
-    public ResponseEntity<Void> delete(@PathVariable Long id) {
-        return ResponseEntity.noContent().build();
+    @DeleteMapping("/usuarios/{id}")
+    public String deleteUsuario(@PathVariable int id) {
+        usuarios.removeIf(usuario -> usuario.getId() == id);
+        return "Usuário deletado com sucesso";
     }
 }
