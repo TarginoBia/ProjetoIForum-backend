@@ -1,20 +1,9 @@
 package com.projeto.IForum.repository;
 
-public class DenunciaRepository{
-    
-    private Map<Long, Denuncia> repository;
+import org.springframework.data.jpa.repository.JpaRepository;
 
-    public DenunciaRepository() {
-        this.repository = new HashMap<>();
-    }
+import com.projeto.IForum.model.Denuncia;
 
-    @Override
-    public void save(Denuncia denuncia) {
-        repository.put(denuncia.getId(), denuncia);
-    }
+public interface DenunciaRepository extends JpaRepository<Denuncia,Long>{
 
-    @Override
-    public Denuncia findDenunciaById(Long id) {
-        return repository.get(id);
-    }
 }
