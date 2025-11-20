@@ -1,41 +1,47 @@
 package com.projeto.IForum.controller;
 
+import java.util.Collections;
+import java.util.List;
+
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.projeto.IForum.dto.FuncionarioDTO;
-import com.projeto.IForum.service.FuncionarioService;
 
 @RestController
 @RequestMapping("/funcionarios")
 public class FuncionarioController{
-    private List<Funcionario> funcionarios = new ArrayList<>();
 
-    @GetMapping("/funcionarios")
-    public List<Funcionario> getAllFuncionarios() {
-        return funcionarios;
+    @PostMapping
+    public ResponseEntity<FuncionarioDTO> registrarFuncionario(@RequestBody FuncionarioDTO FuncionarioDTO) {
+        return ResponseEntity.status(HttpStatus.CREATED).body(FuncionarioDTO); 
     }
 
-    @PostMapping("/funcionarios")
-    public String addFuncionario(@RequestBody Funcionario funcionario) {
-        funcionario.add(funcionario);
-        return "Funcionário inserido com sucesso";
+    @GetMapping("/{id}")
+    public ResponseEntity<FuncionarioDTO> buscarFuncionario(@PathVariable Long id) {
+        return ResponseEntity.ok(new FuncionarioDTO()); 
     }
 
-    @PutMapping("/funcionarios/{id}")
-    public String updateFuncionario(@PathVariable int id, @RequestBody Funcionario updatedFuncionario) {
-        for (Funcionario funcionarios : funcionarios) {
-            if (funcionarios.getId() == id) {
-                funcionarios.setName(updatedfuncionarios.getName());
-                return "Funcionário atualizado com sucesso";
-            }
-        }
-        return "Funcionário não encontrado!";
+    @GetMapping
+    public ResponseEntity<List<FuncionarioDTO>> listarFuncionarios() {
+        return ResponseEntity.ok(Collections.emptyList()); 
+    }
+    
+    @PutMapping("/{id}/status")
+    public ResponseEntity<FuncionarioDTO> atualizarFuncionario(@PathVariable Long id, @RequestParam String novoStatus) {
+        return ResponseEntity.ok(new FuncionarioDTO());
     }
 
-    @DeleteMapping("/funcionarios/{id}")
-    public String deletefuncionarios(@PathVariable int id) {
-        funcionarios.removeIf(funcionarios -> funcionarios.getId() == id);
-        return "Funcionário deletado com sucesso";
+    @DeleteMapping("/{id}")
+    public ResponseEntity<FuncionarioDTO> deleteFuncionario(@PathVariable("id") Long id){
+        return ResponseEntity.ok("Funcionário deletado com sucesso!.");
     }
 }
