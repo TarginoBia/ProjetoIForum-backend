@@ -1,32 +1,40 @@
 package com.projeto.IForum.service;
 
-import com.projeto.IForum.dto.CoordenadorDTO;
-import com.projeto.IForum.model.Coordenador;
-import com.projeto.IForum.repository.CoordenadorRepository;
+import java.util.List;
+import java.util.Optional;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.projeto.IForum.model.Coordenador;
+import com.projeto.IForum.repository.CoordenadorRepository;
+
 @Service
-public class CoordenadorService {
+public class CoordenadorService{
 
-    @Autowired
-    private CoordenadorRepository coordenadorRepository;
-    
-    @Autowired
-    private UsuarioService usuarioService;
+    private final CoordenadorRepository coordenadorRepository;
 
-    public CoordenadorDTO create(CoordenadorDTO coordenadorDTO) {
-        usuarioService.checkEmailUniqueness(coordenadorDTO.getEmail());
-        
-        Coordenador coordenador = new Coordenador();
-        coordenador.setName(coordenadorDTO.getName());
-        coordenador.setEmail(coordenadorDTO.getEmail());
-        coordenador.setSenha(coordenadorDTO.getSenha()); // Placeholder
-        coordenador.setDepartamento(coordenadorDTO.getDepartamento());
-        
-        coordenador = coordenadorRepository.save(coordenador);
-        
-        return new CoordenadorDTO(coordenador);
+    @Autowired 
+    public CoordenadorService(CoordenadorRepository coordenadorRepository) {
+        this.coordenadorRepository = coordenadorRepository;
+    }
+
+    public Coordenador salvarCoordenador(Coordenador coordenador) {
+        if (coordenador.getEmail() == null || coordenador.getEmail().isEmpty()) {
+            throw new IllegalArgumentException("Email é obrigatório.");
+        }
+        return coordenadorRepository.save(coordenador);
+    }
+
+    public Optional<Coordenador> buscarPorId(Long id) {
+        return coordenadorRepository.findById(id);
+    }
+
+    public List<Coordenador> buscarTodos() {
+        return coordenadorRepository.findAll();
     }
     
+    public void deletarCoordenador(Long id) {
+        coordenadorRepository.deleteById(id);
+    }
 }
