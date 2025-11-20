@@ -1,41 +1,47 @@
 package com.projeto.IForum.controller;
 
+import java.util.Collections;
+import java.util.List;
+
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.projeto.IForum.dto.AlunoDTO;
-import com.projeto.IForum.service.AlunoService;
 
 @RestController
 @RequestMapping("/alunos")
 public class AlunoController{
-    private List<Aluno> alunos = new ArrayList<>();
 
-    @GetMapping("/alunos")
-    public List<Aluno> getAllAlunos() {
-        return alunos;
+    @PostMapping
+    public ResponseEntity<AlunoDTO> registrarAluno(@RequestBody AlunoDTO alunoDTO) {
+        return ResponseEntity.status(HttpStatus.CREATED).body(alunoDTO); 
     }
 
-    @PostMapping("/alunos")
-    public String addAluno(@RequestBody Aluno alunos) {
-        alunos.add(alunos);
-        return "Aluno inserido com sucesso";
+    @GetMapping("/{id}")
+    public ResponseEntity<AlunoDTO> buscarAluno(@PathVariable Long id) {
+        return ResponseEntity.ok(new AlunoDTO()); 
     }
 
-    @PutMapping("/alunos/{id}")
-    public String updateAluno(@PathVariable int id, @RequestBody Aluno updatedAluno) {
-        for (Aluno alunos : alunos) {
-            if (alunos.getId() == id) {
-                alunos.setName(updatedAlunos.getName());
-                return "Aluno atualizado com sucesso";
-            }
-        }
-        return "Aluno não encontrado!";
+    @GetMapping
+    public ResponseEntity<List<AlunoDTO>> listarAlunos() {
+        return ResponseEntity.ok(Collections.emptyList()); 
+    }
+    
+    @PutMapping("/{id}/status")
+    public ResponseEntity<AlunoDTO> atualizarAluno(@PathVariable Long id, @RequestParam String novoAluno) {
+        return ResponseEntity.ok(new AlunoDTO());
     }
 
-    @DeleteMapping("/alunos/{id}")
-    public String deleteAlunos(@PathVariable int id) {
-        alunos.removeIf(alunos -> alunos.getId() == id);
-        return "Aluno deletado com sucesso";
+    @DeleteMapping("/{id}")
+    public ResponseEntity<AlunoDTO> deleteAluno(@PathVariable("id") Long id){
+        return ResponseEntity.ok("Aluno deletado com sucesso!.");
     }
 }
