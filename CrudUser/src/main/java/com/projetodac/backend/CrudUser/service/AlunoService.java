@@ -1,38 +1,40 @@
 package com.projeto.IForum.service;
 
-import com.projeto.IForum.dto.AlunoDTO;
-import com.projeto.IForum.model.Aluno;
-import com.projeto.IForum.repository.AlunoRepository;
+import java.util.List;
+import java.util.Optional;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-@Service
+import com.projeto.IForum.model.Aluno;
+import com.projeto.IForum.repository.AlunoRepository;
+
+@Service 
 public class AlunoService {
 
-    @Autowired
-    private AlunoRepository alunoRepository;
-    
-    @Autowired
-    private UsuarioService usuarioService;
-    
-    public AlunoDTO create(AlunoDTO alunoDTO) {
-        usuarioService.checkEmailUniqueness(alunoDTO.getEmail()); 
-        
-        Aluno aluno = new Aluno();
-        aluno.setName(alunoDTO.getName());
-        aluno.setEmail(alunoDTO.getEmail());        
-        aluno.setMatricula(alunoDTO.getMatricula());
-        
-        aluno = alunoRepository.save(aluno);
-        
-        return new AlunoDTO(aluno);
+    private final AlunoRepository alunoRepository;
+
+    @Autowired 
+    public AlunoService(AlunoRepository alunoRepository) {
+        this.alunoRepository = alunoRepository;
+    }
+
+    public Aluno salvarAluno(Aluno aluno) {
+        if (aluno.getEmail() == null || aluno.getEmail().isEmpty()) {
+            throw new IllegalArgumentException("Email é obrigatório.");
+        }
+        return alunoRepository.save(aluno);
+    }
+
+    public Optional<Aluno> buscarPorId(Long id) {
+        return alunoRepository.findById(id);
+    }
+
+    public List<Aluno> buscarTodos() {
+        return alunoRepository.findAll();
     }
     
-    public AlunoDTO findById(Long id) {
-        Aluno aluno = alunoRepository.findById(id)
-            .orElseThrow(() -> new RuntimeException("Aluno não encontrado."));
-            
-        return new AlunoDTO(aluno);
+    public void deletarAluno(Long id) {
+        alunoRepository.deleteById(id);
     }
-    
 }
