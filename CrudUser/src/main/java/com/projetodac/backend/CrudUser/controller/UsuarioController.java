@@ -5,46 +5,44 @@ import java.util.List;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.RestController;
 
-import jakarta.validation.Valid;
+import com.projeto.IForum.dto.UsuarioDTO;
+
 
 @RestController
 @RequestMapping("/usuarios")
 public class UsuarioController{
 
-    private List<Usuario> usuarios = new ArrayList<>();
-
-    @GetMapping("/usuarios")
-    public List<Usuario> getAllUsuarios() {
-        return usuarios;
+    @PostMapping
+    public ResponseEntity<UsuarioDTO> registrarUsuario(@RequestBody UsuarioDTO usuarioDTO) {
+        return ResponseEntity.status(HttpStatus.CREATED).body(usuarioDTO); 
     }
 
-    @PostMapping("/usuarios")
-    public String addUsuario(@RequestBody Usuario usuario) {
-        usuarios.add(usuario);
-        return "Usuário inserido com sucesso";
+    @GetMapping("/{id}")
+    public ResponseEntity<UsuarioDTO> buscarUsuario(@PathVariable Long id) {
+        return ResponseEntity.ok(new UsuarioDTO()); 
     }
 
-    @PutMapping("/usuarios/{id}")
-    public String updateUsuario(@PathVariable int id, @RequestBody Usuario updatedUsuario) {
-        for (Usuario usuario : usuarios) {
-            if (usuario.getId() == id) {
-                usuario.setName(updatedUsuario.getName());
-                return "Usuário atualizado com sucesso";
-            }
-        }
-        return "Usuário não encontrado!";
+    @GetMapping
+    public ResponseEntity<List<UsuarioDTO>> listarUsuarios() {
+        return ResponseEntity.ok(Collections.emptyList()); 
+    }
+    
+    @PutMapping("/{id}/status")
+    public ResponseEntity<UsuarioDTO> atualizarUsuario(@PathVariable Long id, @RequestParam String novoUsuario) {
+        return ResponseEntity.ok(new UsuarioDTO());
     }
 
-    @DeleteMapping("/usuarios/{id}")
-    public String deleteUsuario(@PathVariable int id) {
-        usuarios.removeIf(usuario -> usuario.getId() == id);
-        return "Usuário deletado com sucesso";
+    @DeleteMapping("/{id}")
+    public ResponseEntity<UsuarioDTO> deleteUsuario(@PathVariable("id") Long id){
+        return ResponseEntity.ok("Usuário deletado com sucesso!.");
     }
 }
