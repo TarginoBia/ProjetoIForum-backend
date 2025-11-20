@@ -1,5 +1,6 @@
 package com.projeto.IForum.service;
 
+import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -11,17 +12,30 @@ import com.projeto.IForum.repository.UsuarioRepository;
 @Service
 public class UsuarioService {
 
-    @Autowired
-    private UsuarioRepository usuarioRepository;
+    private final UsuarioRepository usuarioRepository;
 
-    public Optional<Usuario> findByEmail(String email) {
-        return usuarioRepository.findByEmail(email);
+    @Autowired 
+    public UsuarioService(UsuarioRepository usuarioRepository) {
+        this.usuarioRepository = usuarioRepository;
+    }
+
+    public Usuario salvarUsuario(Usuario usuario) {
+        if (usuario.getEmail() == null || usuario.getEmail().isEmpty()) {
+            throw new IllegalArgumentException("Email é obrigatório.");
+        }
+        return usuarioRepository.save(usuario);
+    }
+
+    public Optional<Usuario> buscarPorId(Long id) {
+        return usuarioRepository.findById(id);
+    }
+
+    public List<Usuario> buscarTodos() {
+        return usuarioRepository.findAll();
     }
     
-    public void checkEmailUniqueness(String email) {
-        if (usuarioRepository.existsByEmail(email)) {
-            throw new RuntimeException("O email já está em uso."); 
-        }
+    public void deletarUsuario(Long id) {
+        usuarioRepository.deleteById(id);
     }
     
 }
