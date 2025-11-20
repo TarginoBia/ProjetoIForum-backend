@@ -1,42 +1,48 @@
 package com.projeto.IForum.controller;
 
+import java.util.Collections;
+import java.util.List;
+
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.projeto.IForum.dto.CoordenadorDTO;
-import com.projeto.IForum.service.CoordenadorService;
+import com.projeto.IForum.dto.DenunciaDTO;
+
 
 @RestController
 @RequestMapping("/coordenadores")
 public class CoordenadorController{
 
-    private List<Coordenador> Coordenadores = new ArrayList<>();
-
-    @GetMapping("/coordenadores")
-    public List<Coordenador> getAllCoordenadores() {
-        return coordenadores;
+    @PostMapping
+    public ResponseEntity<DenunciaDTO> registrarDenuncia(@RequestBody DenunciaDTO denunciaDTO) {
+        return ResponseEntity.status(HttpStatus.CREATED).body(denunciaDTO); 
     }
 
-    @PostMapping("/coordenadores")
-    public String addCoordenador(@RequestBody Coordenador coordenadores) {
-        coordenadores.add(coordenadores);
-        return "Coordenador inserido com sucesso";
+    @GetMapping("/{id}")
+    public ResponseEntity<DenunciaDTO> buscarDenuncia(@PathVariable Long id) {
+        return ResponseEntity.ok(new DenunciaDTO()); 
     }
 
-    @PutMapping("/coordenadores/{id}")
-    public String updateCoordenador(@PathVariable int id, @RequestBody Coordenador updatedCoordenador) {
-        for (Coordenador coordenadores : coordenadores) {
-            if (coordenadores.getId() == id) {
-                coordenadores.setName(updatedCoordenadors.getName());
-                return "Coordenador atualizado com sucesso";
-            }
-        }
-        return "Coordenador não encontrado!";
+    @GetMapping
+    public ResponseEntity<List<DenunciaDTO>> listarDenuncias() {
+        return ResponseEntity.ok(Collections.emptyList()); 
+    }
+    
+    @PutMapping("/{id}/status")
+    public ResponseEntity<DenunciaDTO> atualizarStatus(@PathVariable Long id, @RequestParam String novoStatus) {
+        return ResponseEntity.ok(new DenunciaDTO());
     }
 
-    @DeleteMapping("/coordenadores/{id}")
-    public String deleteCoordenadors(@PathVariable int id) {
-        coordenadores.removeIf(coordenadores -> coordenadores.getId() == id);
-        return "Coordenador deletado com sucesso";
+    @DeleteMapping("/{id}")
+    public ResponseEntity<DenunciaDTO> deleteDenuncia(@PathVariable("id") Long id){
+        return ResponseEntity.ok("Denúncia deletada com sucesso!.");
     }
 }
