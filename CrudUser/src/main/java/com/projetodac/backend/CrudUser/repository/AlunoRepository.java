@@ -1,20 +1,9 @@
 package com.projeto.IForum.repository;
 
-public class AlunoRepository implements UsuarioRepository<Aluno>{
+import org.springframework.data.jpa.repository.JpaRepository;
 
-    private Map<Long, Aluno> repository;
+import com.projeto.IForum.model.Aluno;
 
-    public AlunoRepository() {
-        this.repository = new HashMap<>();
-    }
+public interface AlunoRepository extends JpaRepository<Aluno,Long>{
 
-    @Override
-    public void save(Aluno aluno) {
-        repository.put(aluno.getId(), aluno);
-    }
-
-    @Override
-    public Aluno findAlunoById(Long id) {
-        return repository.get(id);
-    }
 }
