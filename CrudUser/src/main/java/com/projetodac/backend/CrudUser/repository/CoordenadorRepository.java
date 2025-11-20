@@ -1,20 +1,9 @@
 package com.projeto.IForum.repository;
 
-public class CoordenadorRepository implements UsuarioRepository<Coordenador>{
-    
-    private Map<Long, Coordenador> repository;
+import org.springframework.data.jpa.repository.JpaRepository;
 
-    public CoordenadorRepository() {
-        this.repository = new HashMap<>();
-    }
+import com.projeto.IForum.model.Coordenador;
 
-    @Override
-    public void save(Coordenador coordenador) {
-        repository.put(coordenador.getId(), coordenador);
-    }
+public interface CoordenadorRepository extends JpaRepository<Coordenador,Long>{
 
-    @Override
-    public Coordenador findCoordenadorById(Long id) {
-        return repository.get(id);
-    }
 }
