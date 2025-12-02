@@ -1,5 +1,7 @@
 package com.projeto.IForum.dto;
 
+import com.projeto.IForum.model.Coordenador;
+
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Size;
@@ -8,7 +10,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-@Getter
+@Getter 
 @Setter
 @NoArgsConstructor 
 @AllArgsConstructor
@@ -18,7 +20,7 @@ public class CoordenadorDTO {
     
     @NotBlank(message = "O nome é obrigatório.")
     @Size(min = 3, max = 120, message = "O nome deve ter entre 3 e 120 caracteres.")
-    private String name;
+    private String nome;
 
     @NotBlank(message = "O email é obrigatório.")
     @Email(message = "Formato de email inválido.")
@@ -33,4 +35,26 @@ public class CoordenadorDTO {
     @Size(max = 120, message = "O nome do departamento deve ter no máximo 120 caracteres.")
     private String departamento;
     
+    public static CoordenadorDTO fromEntity(Coordenador coordenador) {
+        if (coordenador == null) {
+            return null;
+        }
+        return new CoordenadorDTO(
+            coordenador.getId(),
+            coordenador.getNome(),
+            coordenador.getEmail(),
+            coordenador.getSenha(),
+            coordenador.getDepartamento()
+        );
+    }
+
+    public static Coordenador toEntity(CoordenadorDTO dto) {
+        Coordenador coordenador = new Coordenador();
+        coordenador.setId(dto.getId()); 
+        coordenador.setNome(dto.getNome());
+        coordenador.setEmail(dto.getEmail());
+        coordenador.setSenha(dto.getSenha());
+        coordenador.setDepartamento(dto.getDepartamento());
+        return coordenador;
+    }
 }
