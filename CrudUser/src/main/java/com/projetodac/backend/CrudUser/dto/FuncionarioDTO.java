@@ -1,5 +1,7 @@
 package com.projeto.IForum.dto;
 
+import com.projeto.IForum.model.Funcionario;
+
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Size;
@@ -18,7 +20,7 @@ public class FuncionarioDTO {
     
     @NotBlank(message = "O nome é obrigatório.")
     @Size(min = 3, max = 120, message = "O nome deve ter entre 3 e 120 caracteres.")
-    private String name;
+    private String nome;
 
     @NotBlank(message = "O email é obrigatório.")
     @Email(message = "Formato de email inválido.")
@@ -29,8 +31,35 @@ public class FuncionarioDTO {
     @Size(min = 8, message = "A senha deve ter no mínimo 8 caracteres.")
     private String senha; 
     
+    @NotBlank(message = "O cargo é obrigatório.")
+    private String cargo;
+
     @NotBlank(message = "O departamento é obrigatório.")
     @Size(max = 120, message = "O nome do departamento deve ter no máximo 120 caracteres.")
     private String departamento;
 
+    public static FuncionarioDTO fromEntity(Funcionario funcionario) {
+        if (funcionario == null) {
+            return null;
+        }
+        return new FuncionarioDTO(
+            funcionario.getId(),
+            funcionario.getNome(),
+            funcionario.getEmail(),
+            funcionario.getSenha(),
+            funcionario.getCargo(),
+            funcionario.getDepartamento()
+        );
+    }
+
+    public static Funcionario toEntity(FuncionarioDTO dto) {
+        Funcionario funcionario = new Funcionario();
+        funcionario.setId(dto.getId()); 
+        funcionario.setNome(dto.getNome());
+        funcionario.setEmail(dto.getEmail());
+        funcionario.setSenha(dto.getSenha());
+        funcionario.setCargo(dto.getCargo());
+        funcionario.setDepartamento(dto.getDepartamento());
+        return funcionario;
+    }
 }
